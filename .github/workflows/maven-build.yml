@@ -37,18 +37,26 @@ jobs:
           install: true
       - name: Setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v4
+        id: setup-cli
         env:
           JF_URL: ${{ vars.JF_URL }}
           JF_ACCESS_TOKEN: ${{ secrets.JF_ACCESS_TOKEN }}
-      - name: Configure Docker authentication with JFrog
-        run: jf docker-login
+        with:
+          oidc-provider-name: jfrog-github-oidc
+          
+      - name: Authenticate Docker
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ vars.JF_URL }}
+          username: ${{ steps.setup-cli.outputs.oidc-user }}
+          password: ${{ steps.setup-cli.outputs.oidc-token }}
       - name: Build Tag and push Docker Image
         env:
           IMAGE_NAME: trial4pmqli.jfrog.io/dso-docker/jfrog-docker-example-image:${{ github.run_number }}
         run: |
           docker buildx ls
           jf docker --version
-          jf docker buildx build --platform linux/amd64,linux/arm64  -t $IMAGE_NAME  --push .
+          jf docker  build --platform linux/amd64,linux/arm64  -t $IMAGE_NAME  --push .
           jf docker push $IMAGE_NAME
           
       - name: Publish Build info With JFrog CLI

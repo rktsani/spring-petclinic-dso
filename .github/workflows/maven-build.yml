@@ -46,7 +46,7 @@ jobs:
         run: |
           docker buildx ls
           jf docker --version
-          jf docker build --platform linux/amd64,linux/arm64  -t $IMAGE_NAME .
+          jf docker buildx build --platform linux/amd64,linux/arm64  -t $IMAGE_NAME .
           jf docker push $IMAGE_NAME
           
       - name: Publish Build info With JFrog CLI

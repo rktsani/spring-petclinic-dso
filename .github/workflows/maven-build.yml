@@ -36,7 +36,7 @@ jobs:
         env:
           IMAGE_NAME: trial4pmqli.jfrog.io/dso-docker/jfrog-docker-example-image:${{ github.run_number }}
         run: |
-          jf docker build -t $IMAGE_NAME .
+          jf docker build --platform linux/arm64 -t $IMAGE_NAME .
           jf docker push $IMAGE_NAME
           
       - name: Publish Build info With JFrog CLI

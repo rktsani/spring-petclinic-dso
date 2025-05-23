@@ -25,16 +25,20 @@ jobs:
           java-version: ${{matrix.java}}
           distribution: 'adopt'
           cache: maven
+          
       - name: Build with Maven Wrapper
         run: ./mvnw -B clean verify
+
+      # We need QEMU and buildx for multi platform support  
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v3  
       - name: Setup buildx instance
         uses: docker/setup-buildx-action@v3
         with:
           use: true
           platforms: linux/amd64,linux/arm64
           install: true
+   
       - name: Setup JFrog CLI
         uses: jfrog/setup-jfrog-cli@v4
         id: setup-cli
@@ -48,6 +52,7 @@ jobs:
           registry: ${{ vars.JF_URL }}
           username: ${{ vars.JF_USER }}
           password: ${{ secrets.JF_DOCKER_TOKEN }}
+          
       - name: Build Tag and push Docker Image
         env:
           IMAGE_NAME: trial4pmqli.jfrog.io/dso-docker/jfrog-docker-example-image:${{ github.run_number }}

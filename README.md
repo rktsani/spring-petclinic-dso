@@ -2,11 +2,13 @@
 
 ### Building and running this project using Github Actions + Docker + JFrog Artifactory 
 
-- Configure pom.xml repositories section to use only Maven Central for resolving and downloading the dependencies (https://repo.maven.apache.org/maven2/)
+- Create a remote and virtual repository on JFrog to point to official Maven Central repository
+- Configure Maven settings.xml repositories section to use the repository configured in previous step.
 - Configure Git Actions workflow with the following steps
   - We use ubuntu-latest with Java 17 running on it for this build
-  - First checkout the source code from the repo
+  - Checkout the source code from the repo
   - Setup the JDK environment
+  - Write maven settings file to disk.
   - Next, build the jar file and run tests using `./mvnw -B clean verify` command
   - Setup QEMU and buildx as we need these packages to make our docker container multi-platform compatible (ARM64 and AMD64)
   - Next setup JFrog CLI and configure it to use the correct platform url and access-key (stored in Github settings)
@@ -26,8 +28,8 @@ docker login -uUSERNAME xxxx.jfrog.io
 ```
 docker pull xxxx.jfrog.io/xxx-docker/example-image:6
 ```
-4. Run the docker container and map the host port 7080 to docker port 8080
+4. Run the docker container and map the host port 8000 to docker port 8080
 ```
-docker run -d --name my-dso-test2 -p 7080:8080 xxxx.jfrog.io/xxx-docker/example-image:6
+docker run -d --name my-dso-test2 -p 8000:8080 xxxx.jfrog.io/xxx-docker/example-image:6
 ```
-5. Open localhost:7080 on host web browswer to access the application
+5. Open localhost:8000 on host web browser to access the application

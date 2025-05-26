@@ -1,6 +1,6 @@
 # Spring PetClinic Sample Application [![Build Status](https://github.com/rktsani/spring-petclinic-dso/actions/workflows/maven-build.yml/badge.svg)](https://github.com/rktsani/spring-petclinic-dso/actions/workflows/maven-build.yml)
 
-### Building and running this project using Github Actions + Docker + JFrog Artifactory
+### Building and running this project using Github Actions + Docker + JFrog Artifactory 
 
 - Configure pom.xml repositories section to use only Maven Central for resolving and downloading the dependencies (https://repo.maven.apache.org/maven2/)
 - Configure Git Actions workflow with the following steps

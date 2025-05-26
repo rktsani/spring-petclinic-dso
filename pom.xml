@@ -296,7 +296,7 @@
     </license>
   </licenses>
 
-  <repositories>
+  <!--repositories>
   <repository>
     <id>central</id>
     <name>Maven Central</name>
@@ -321,7 +321,7 @@
       <enabled>false</enabled>
     </snapshots>
   </pluginRepository>
-</pluginRepositories>
+</pluginRepositories-->
 
   <profiles>
     <profile>

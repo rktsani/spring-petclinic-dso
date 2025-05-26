@@ -34,7 +34,7 @@ jobs:
       - name: Build with Maven Wrapper
         run: ./mvnw -B clean verify
         env:
-          JF_USER: ${{ secrets.JF_USER }}
+          JF_USER: ${{ vars.JF_USER }}
           JF_JMAVEN_TOKEN: ${{ secrets.JF_JMAVEN_TOKEN }}
 
       # We need QEMU and buildx for multi platform support  
